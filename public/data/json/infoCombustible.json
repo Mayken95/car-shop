@@ -1,0 +1,17 @@
+[
+    {
+        "id":1,
+        "tipo":"Diesel",
+        "niveles": ["0 (Vacío)","1/4", "2/4 (Medio Tanque)", "3/4" , "4/4 (Tanque LLeno)"]
+    },
+    {
+        "id":2,
+        "tipo":"Gasolina",
+        "niveles": ["0 (Vacío)","1/4", "2/4 (Medio Tanque)", "3/4" , "4/4 (Tanque LLeno)"]
+    },
+    {
+        "id":3,
+        "tipo":"Gasolina y GAS",
+        "niveles": ["0 (Vacío)","1/4", "2/4 (Medio Tanque)", "3/4" , "4/4 (Tanque LLeno)", "No aplica"]
+    }
+]
