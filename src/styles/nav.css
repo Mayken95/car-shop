@@ -1,0 +1,25 @@
+
+.back-gray{
+    background-color: rgb(0, 0, 0);
+}
+.navMain{
+    margin: auto;
+    width: 100%;
+    display: flex; 
+    font-weight: bold;
+    background-color:black; 
+    color: white;
+    font-size: 2rem;
+    
+}
+.cont-navBar{
+    display: flex;
+    justify-content: space-between;  
+    gap: 20rem;
+    flex-direction: row; 
+    width:100%;
+    padding: 1rem ;
+}
+.cont-navBar li{
+    list-style: none;
+}

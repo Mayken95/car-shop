@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-
+import './styles/form.css';
 function FormClient () {
 	const [inputNombre, cambiarInputNombre] = useState('');
 	const [inputCorreo, cambiarInputCorreo] = useState('');
 	const [inputContacto, cambiarInputContacto] = useState('');
 	const [inputInfoId, cambiarInputInfoId] = useState('');
 	const [optionTypeId, cambiarOptionTypeId] = useState('dni');
-	
+
 	// Funcion que se encargara de validar los datos y enviar el formulario
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -21,7 +21,7 @@ function FormClient () {
 	const handleInputNombre = (e) => {
 		cambiarInputNombre(e.target.value);
 	}
-	
+
 	// Funcion que se encarga de cambiar el estado del inputCorreo
 	const handleInputCorreo = (e) => {
 		cambiarInputCorreo(e.target.value);
@@ -39,7 +39,7 @@ function FormClient () {
 	}
 	return (
 		<>
-			<form action="" onSubmit={handleSubmit}>
+			<form action="" className="formulario" onSubmit={handleSubmit}>
 				<div className="titleForm"><h1>Información del Cliente</h1></div>
 				<div className="elemForm">
 					<label htmlFor="nombre">Nombre del Cliente</label>
@@ -78,12 +78,12 @@ function FormClient () {
 				</div>
 				<div className="elemForm">
 					<label htmlFor="typeId">Tipo de Identificación</label>
-					<select name="typeId" value={optionTypeId} onChange={ handleOptionTypeId}>
+					<select name="typeId" key={optionTypeId} value={optionTypeId} onChange={ handleOptionTypeId}>
 						<option value="dni">Cédula</option>
 						<option value="passport">Pasaporte</option>
 						<option value="ruc">RUC</option>
 					</select>
-					<p>Opcion prueba: {optionTypeId}</p>
+					<p>Opcion prueba: {optionTypeId}</p> 
 				</div>
 				<div className="elemForm">
 					<label htmlFor="infoId">Identificación Fiscal</label>
@@ -96,10 +96,10 @@ function FormClient () {
 						onChange={handleInputInfoId}
 					/>
 				</div>
-			
+
 			</form>
 		</>
 	);
 }
- 
+
 export default FormClient;

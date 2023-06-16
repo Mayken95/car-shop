@@ -1,4 +1,5 @@
 import React, {	useEffect,	useState} from 'react';
+import './styles/form.css';
 //Proporcionar la información del vehículo, como la marca, modelo, placa, nivel del tanque de gasolina,
 // y un campo de texto donde 
 // se podrán detallar abolladuras, rayones o cualquier dato relevante sobre el estado exterior del vehículo.
@@ -29,12 +30,11 @@ export default function FormVehicle() {
 	const [inputPlaca, cambiarInputPlaca] = useState('');
 	const [inputMarca, cambiarInputMarca] = useState('');
 	const [inputModelo, cambiarInputModelo] = useState('');
-	const [opCombustible, cambiarOpCombustible] = useState(0);
-	const [opNivTanque, cambiarOpNivTanque] = useState('');
+	const [opCombustible, cambiarOpCombustible] = useState(-1);
+	const [opNivTanque, cambiarOpNivTanque] = useState(-1);
 	const [textAreaInfoEstado, cambiartextAreaInfoEstado] = useState('');
 	const marcas = useMarcas();
 	const combustible = useCombustible();
-	console.log(combustible);
 	const handleInputPlaca = (e) => {
 		cambiarInputPlaca(e.target.value);
 	}
@@ -47,15 +47,18 @@ export default function FormVehicle() {
 	const handleTextAreaInfoEstado = (e) => {
 		cambiartextAreaInfoEstado(e.target.value);
 	}
+	const handleOpNivTanque = (e) => {
+		cambiarOpNivTanque(e.target.value);
+	}
 	const handleOpCombustible = (e) => {
 		cambiarOpCombustible(e.target.value);
 	}
 	const handleCargarOpNivTanque = (e) => {
-		const opcion = e.target.value;
-		cambiarOpNivTanque(opcion);
+		//const opcion = e.target.value;
+		cambiarOpNivTanque(-1);
 	}
 	return ( <>
-			<form action = "">
+			<form action = "" className="formulario" >
 			<div className = "titleForm"><h1>Información del Vehículo </h1></div>
 				<div>
 					<label htmlFor = "placa">Placa</label> 
@@ -71,7 +74,7 @@ export default function FormVehicle() {
 					<select name = "marca" value = {inputMarca}	onChange = {handleInputMarca}>
 					<option value = "" > Seleccione una opción </option> {
 					marcas.map(marca =>
-							<option value = {marca.id}> {marca.info} </option>
+							<option key={marca.id} value = {marca.id}> {marca.info} </option>
 					)} 
 					</select> 
 				</div> 			
@@ -87,8 +90,8 @@ export default function FormVehicle() {
 				</div> 
 				<div>
 					<label htmlFor = "combustible"> Combustible </label> 
-					<select name = "combustible" value = {opCombustible}  onChange = {handleOpCombustible}onClick={handleCargarOpNivTanque}>
-					<option value = "0" > Seleccione una opción </option> {
+					<select name = "combustible" value = {opCombustible}  onChange = {handleOpCombustible} onClick={handleCargarOpNivTanque}>
+					<option value = "-1" > Seleccione una opción </option> {
 					combustible.map(combustible =>
 							<option key={"combustible"+combustible.id} value= {combustible.id}> {combustible.tipo} </option>
 					)} 
@@ -96,13 +99,13 @@ export default function FormVehicle() {
 				</div> 
 				<div>
 					<label htmlFor = "nivelTanque"> Nivel de Tanque </label> 					
-					<select name = "nivelTanque" value = {opNivTanque} onChange = {handleOpCombustible}>
-					<option value = "0" > Seleccione una opción </option> 
+					<select name = "nivelTanque" value = {opNivTanque} onChange = {handleOpNivTanque}>
+					<option value = "-1" > Seleccione una opción </option> 
 					{
-						opNivTanque>0 &&
+						opCombustible>0 &&
 						(
-							combustible[(opNivTanque-1)].niveles.map((nivel,i)=>(
-								<option key={"nivel"+i} value=""> {nivel} </option>
+							combustible[(opCombustible-1)].niveles.map((nivel,i)=>(
+								<option key={"nivel"+i} value={i}> {nivel} </option>
 							))
 						)
 					}
@@ -118,6 +121,8 @@ export default function FormVehicle() {
 						onChange = {handleTextAreaInfoEstado}
 						/> 
 				</div > 
+				<h2>Nuestros servicios</h2>
+				<p>Seleccione las servicios que desea: </p>
 				</form> 
 				</>
 );

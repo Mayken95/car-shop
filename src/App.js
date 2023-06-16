@@ -1,12 +1,14 @@
 import React, {useState}  from 'react';
-import './index.css';
+import './styles/index.css';
+import './styles/form.css';
 import FormClient from './FormClient' ;
 import FormVehicle from './FormVehicle' ;
+import NavBar from './NavBar';
 import Boton from './Button'
-  
+
 export function App(){
     const [showFormularioClient, setShowFormularioClient] = useState(true);
-	const [showFormularioVehicle, setShowVehicle] = useState(false);
+	  const [showFormularioVehicle, setShowVehicle] = useState(false);
     const handleClickForm = () => {
         setShowFormularioClient(!showFormularioClient);
         setShowVehicle(true);
@@ -16,15 +18,18 @@ export function App(){
         setShowFormularioClient(false)
     }
 
-return (
-    <div className="formulario">
+return (<>
+    <NavBar/>
+    <div className="contenedor">
+
       {showFormularioClient && (
-        <><FormClient /><Boton text="Continuar" onClickForm={handleClickForm} /></>
+        <div className="cont-form"><FormClient/><Boton text="Continuar" onClickForm={handleClickForm} /></div>
       )}
       {showFormularioVehicle && (
-        <><FormVehicle /><Boton text="Continuar" onClickForm={handleClickForm2} /></>
+        <div className="cont-form"><FormVehicle/><Boton text="Continuar" onClickForm={handleClickForm2} /></div>
       )}
     </div>
+    </>
   );
   
     
