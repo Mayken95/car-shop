@@ -1,4 +1,6 @@
 import React, {	useEffect,	useState} from 'react';
+import Services from './Services' 
+
 import './styles/form.css';
 //Proporcionar la información del vehículo, como la marca, modelo, placa, nivel del tanque de gasolina,
 // y un campo de texto donde 
@@ -35,6 +37,7 @@ export default function FormVehicle() {
 	const [textAreaInfoEstado, cambiartextAreaInfoEstado] = useState('');
 	const marcas = useMarcas();
 	const combustible = useCombustible();
+
 	const handleInputPlaca = (e) => {
 		cambiarInputPlaca(e.target.value);
 	}
@@ -60,6 +63,7 @@ export default function FormVehicle() {
 	return ( <>
 			<form action = "" className="formulario" >
 			<div className = "titleForm"><h1>Información del Vehículo </h1></div>
+				<p>Cliente: Valiendo MAdres</p>
 				<div>
 					<label htmlFor = "placa">Placa</label> 
 					<input type = "text"
@@ -123,6 +127,8 @@ export default function FormVehicle() {
 				</div > 
 				<h2>Nuestros servicios</h2>
 				<p>Seleccione las servicios que desea: </p>
+				
+			
 				</form> 
 				</>
 );

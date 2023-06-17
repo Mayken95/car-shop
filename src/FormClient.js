@@ -1,45 +1,41 @@
-import React, {useState} from 'react';
+import React, {useState, useReducer} from 'react';
+import FormContext from './context/FormContext';
+import formReducer from './context/FormReducer';
 import './styles/form.css';
-function FormClient () {
-	const [inputNombre, cambiarInputNombre] = useState('');
-	const [inputCorreo, cambiarInputCorreo] = useState('');
-	const [inputContacto, cambiarInputContacto] = useState('');
-	const [inputInfoId, cambiarInputInfoId] = useState('');
-	const [optionTypeId, cambiarOptionTypeId] = useState('dni');
+import './styles/button.css';
+const FormContextClient = FormContext;
+function FormClient ({ onContinuar }) {
+	const [formData, setFormData] = useState({
+		nombre: "",
+		correo: "",
+		contacto: "",
+		infoId: "",
+		typeId: "dni"
+	  });
+	
+	const { nombre, correo, contacto, infoId, typeId } = formData;
+	const [formState, dispatch] = useReducer(formReducer, formData);
 
+	const handleChange = (e) => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+	}
 	// Funcion que se encargara de validar los datos y enviar el formulario
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		if (nombre && correo && contacto && infoId && typeId) {
+			dispatch({ type: 'SET_FORM_VALUES', payload: formState }); 
+			dispatch({ type: 'RESET_FORM' }); // Reiniciar el formulario
+		  console.log("formulario enviado");
+		} else {
+			alert("Faltan completar campos")
+		  	console.log("PAra continuar deberá completar todos los campos");
+		}
+	};
 
-		// Comprobamos validacion del formulario ...
-		// Si todo es correcto enviamos el formulario
-
-		console.log('Formulario Enviado!');
-	}
-
-	// Funcion que se encarga de cambiar el estado del inputNombre
-	const handleInputNombre = (e) => {
-		cambiarInputNombre(e.target.value);
-	}
-
-	// Funcion que se encarga de cambiar el estado del inputCorreo
-	const handleInputCorreo = (e) => {
-		cambiarInputCorreo(e.target.value);
-	}
-
-	const handleInputContacto = (e) => {
-		cambiarInputContacto(e.target.value);
-	}
-
-	const handleInputInfoId = (e) => {
-		cambiarInputInfoId(e.target.value);
-	}
-	const handleOptionTypeId = (e) => {
-		cambiarOptionTypeId(e.target.value);
-	}
 	return (
 		<>
-			<form action="" className="formulario" onSubmit={handleSubmit}>
+			<FormContextClient.Provider  value={{ formState, dispatch}}>
+				<div className="formulario">
 				<div className="titleForm"><h1>Información del Cliente</h1></div>
 				<div className="elemForm">
 					<label htmlFor="nombre">Nombre del Cliente</label>
@@ -48,8 +44,8 @@ function FormClient () {
 						name="nombre"
 						placeholder="Nombre"
 						id="nombre"
-						value={inputNombre}
-						onChange={handleInputNombre}
+						value={nombre}
+						onChange={handleChange}
 					/>
 				</div>
 
@@ -60,8 +56,8 @@ function FormClient () {
 						name="correo"
 						placeholder="Correo"
 						id="correo"
-						value={inputCorreo}
-						onChange={handleInputCorreo}
+						value={correo}
+						onChange={handleChange}
 					/>
 				</div>
 
@@ -72,18 +68,18 @@ function FormClient () {
 						name="contacto"
 						placeholder="Número de contacto"
 						id="contacto"
-						value={inputContacto}
-						onChange={handleInputContacto}
+						value={contacto}
+						onChange={handleChange}
 					/>
 				</div>
 				<div className="elemForm">
 					<label htmlFor="typeId">Tipo de Identificación</label>
-					<select name="typeId" key={optionTypeId} value={optionTypeId} onChange={ handleOptionTypeId}>
+					<select name="typeId" key={typeId} value={typeId} onChange={ handleChange}>
 						<option value="dni">Cédula</option>
 						<option value="passport">Pasaporte</option>
 						<option value="ruc">RUC</option>
 					</select>
-					<p>Opcion prueba: {optionTypeId}</p> 
+					{/* <p>Opcion prueba: {typeId}</p>  */}
 				</div>
 				<div className="elemForm">
 					<label htmlFor="infoId">Identificación Fiscal</label>
@@ -92,12 +88,13 @@ function FormClient () {
 						name="infoId"
 						placeholder="Número de identificación"
 						id="infoId"
-						value={inputInfoId}
-						onChange={handleInputInfoId}
+						value={infoId}
+						onChange={handleChange}
 					/>
 				</div>
-
-			</form>
+				<button className="btn"  onClick={handleSubmit}>Continuar</button>
+				</div>
+			</FormContextClient.Provider>
 		</>
 	);
 }

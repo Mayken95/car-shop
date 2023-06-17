@@ -1,6 +1,7 @@
 
 .back-gray{
-    background-color: rgb(0, 0, 0);
+   background: rgb(0,74,181);
+   background: linear-gradient(351deg, rgba(0,74,181,0.4009978991596639) 0%, rgba(28,84,203,0.8239670868347339) 44%, rgba(37,36,38,1) 100%);
 }
 .navMain{
     margin: auto;
