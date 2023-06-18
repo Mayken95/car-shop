@@ -35,9 +35,23 @@
     padding-top: 1rem;
 }
 .section-total,.section-total-value{
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
 }
 .section-total-value{
     color: green
+}
+.text-desc-items{
+    margin-left: 4rem;
+}
+
+.box-services{
+    margin-bottom: 1rem;
+}
+.label-items{
+    font-weight: bold;
+}
+
+.items-lighter{
+    font-weight: lighter!important;
 }

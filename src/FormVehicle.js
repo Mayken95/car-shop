@@ -1,8 +1,8 @@
 import React, {	useEffect,	useState, useContext, createContext} from 'react';
 import './styles/form.css';
+import {colores} from "./constants/ColoresInfo"
 import { FormContextClient } from './FormClient';
-import Services from './Services' 
-import FormOrder from './FormOrder' 
+import Services from './Services';
 //Proporcionar la información del vehículo, como la marca, modelo, placa, nivel del tanque de gasolina,
 // y un campo de texto donde 
 // se podrán detallar abolladuras, rayones o cualquier dato relevante sobre el estado exterior del vehículo.
@@ -36,6 +36,7 @@ export default function FormVehicle() {
 	const [inputPlaca, cambiarInputPlaca] = useState('');
 	const [inputMarca, cambiarInputMarca] = useState('');
 	const [inputModelo, cambiarInputModelo] = useState('');
+	const [opColor, cambiarOpColor] = useState(-1);
 	const [opCombustible, cambiarOpCombustible] = useState(-1);
 	const [opNivTanque, cambiarOpNivTanque] = useState(-1);
 	const [textAreaInfoEstado, cambiartextAreaInfoEstado] = useState('');
@@ -65,15 +66,18 @@ export default function FormVehicle() {
 		//const opcion = e.target.value;
 		cambiarOpNivTanque(-1);
 	}
+	const handleCargarOpColor = (e) => {
+		cambiarOpColor(e.target.value);
+	}
 	const infoVehicle = {
 		inputPlaca,
-		inputMarca, inputModelo, opCombustible, opNivTanque, 
+		inputMarca, inputModelo, opColor, opCombustible, opNivTanque, 
 		textAreaInfoEstado
 	}
 	const handleSubmit = (e)=>{
-		if (inputPlaca && inputMarca && inputModelo  && opCombustible && opNivTanque && textAreaInfoEstado) {
+		if (inputPlaca && inputMarca && inputModelo  && (opCombustible && opCombustible !==-1)&& ( opNivTanque && opNivTanque!==-1 )&& textAreaInfoEstado && (opColor&&opColor!==-1)) {
 			setFormVisibleVeh(false);
-			console.log('Resumen VEHICULO:', infoVehicle);
+			//console.log('Resumen VEHICULO:', infoVehicle);
 		  } else {
 			alert('Por favor, debe completar todos los campos del formulario');
 		  }
@@ -84,8 +88,10 @@ export default function FormVehicle() {
 			{isFormVisibleVeh && (
 			<div className="formulario" >
 			<div className = "titleForm"><h1>Información del Vehículo </h1></div>
-				<p className="veh-client">Cliente: {formState.nombre}</p>
-				<p className="veh-correo">Correo:  {formState.correo}</p>
+			    <div className="info-client">
+					<p className="veh-client"><span className="veh-label">Cliente: </span> {formState.nombre}</p>
+					<p className="veh-correo"><span className="veh-label">Correo: </span>  {formState.correo}</p>
+				</div>				
 				<div>
 					<label htmlFor = "placa">Placa</label> 
 					<input type = "text"
@@ -95,6 +101,15 @@ export default function FormVehicle() {
 					value = {inputPlaca} onChange = {handleInputPlaca}
 					/> 
 				</div>
+				<div>
+					<label htmlFor = "color">Color</label> 					
+					<select name = "color" value = {opColor}	onChange = {handleCargarOpColor}>
+					<option value = "-1" > Seleccione una opción </option> {
+					colores.map(color =>
+							<option key={color.id}> {color.info} </option>
+					)} 
+					</select> 
+				</div> 	
 				<div>
 					<label htmlFor = "marca">Marca</label> 					
 					<select name = "marca" value = {inputMarca}	onChange = {handleInputMarca}>
@@ -146,14 +161,11 @@ export default function FormVehicle() {
 						value = {textAreaInfoEstado}
 						onChange = {handleTextAreaInfoEstado}
 						/> 
-				</div > 
-				<h2>Nuestros servicios</h2>
-				<p>Seleccione las servicios que desea: </p>
+				</div > 			
 				
-				<Services/>
-				<button className="btn"  onClick={handleSubmit}>Continuar</button>
+				<button className="btn"  onClick={handleSubmit}>Seleccionar servicios</button>
 				</div> )}
-				{!isFormVisibleVeh && <FormOrder />}
+				{!isFormVisibleVeh && <Services/>}
 				</FormContextVehicle.Provider>
 				</>
 );

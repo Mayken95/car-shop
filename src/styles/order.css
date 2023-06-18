@@ -1,0 +1,30 @@
+.label-order, .cont-order{
+    font-size: 0.95rem;
+}
+.cont-order{
+    font-weight: bold;
+}
+.infoOrder{
+    margin-top: 0.23rem;
+}
+.cont-client{
+    border: 2px solid gray;
+    padding-left: 2rem;
+}
+
+.cont-vehicle, .cont-services, .cont-dates{
+    border: 2px solid gray;
+    margin-top: 1.2rem;
+    padding-left: 2rem;
+}
+
+.cont-title{
+    color: #ffffff;
+    text-align: right;
+    padding: 0.86rem;
+    font-size: 1.5rem;
+   background-color: rgb(28, 28, 90) ;
+}
+.success-txt{
+    font-size: 2rem;
+}

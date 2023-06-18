@@ -1,13 +1,16 @@
-import { useState} from "react";
-import {services} from "./Servi"
+import { useState,createContext} from "react";
+import {services} from "./constants/Servicios"
 import './styles/services-items.css';
+import FormOrder from './FormOrder' ;
 const getFormattedPrice = (costo) => `$${costo.toFixed(2)}`;
 
+export const FormContextServices = createContext();
 export default function Services() {
     const [checkedInputState, setCheckedInputState] = useState(
       (new Array(services.length).fill(false))
     );
-    
+    const [isFormVisibleServ, setFormVisibleServ] = useState(true);
+
   const [total, setTotal] = useState(0);
   // const findCostService = (position, seervices)=>{
   //   const posId= parseInt(position) + 1;
@@ -15,14 +18,35 @@ export default function Services() {
   //   console.log(seervices[posId].costo);
   //   return (seervices[{ posId}].costo);
   // }
+  const validateServicesChosen=(estadoServicios)=>{
+      let chosen= false;
+      const contServices = estadoServicios.reduce((count, servicio) => {
+        if (servicio === false) {
+          return count + 1;
+        }
+        return count;
+      }, 0);
+      if(contServices===estadoServicios.length){
+        chosen=true;
+      }
+      return chosen;
+  }
+  const handleSubmit = (e)=>{
+    console.log(!validateServicesChosen(checkedInputState));
+		if (checkedInputState && !validateServicesChosen(checkedInputState)) {
+			setFormVisibleServ(false);
+		  } else {
+			alert('Por favor, debe seleccionar al menos un servicio');
+		  }
+	}
   const handleOnChange = (position) => {
-    console.log("Esta es la position"+ position);
-    console.log("Diste un clic "+checkedInputState);
+   // console.log("Esta es la position"+ position);
+   // console.log("Diste un clic "+checkedInputState);
      // const updatedCheckedInputState = checkedInputState.map((itemState, index) => index === position ? !itemState : itemState);
       const updatedCheckedInputState = checkedInputState;      
       updatedCheckedInputState[position]= !checkedInputState[position];
       setCheckedInputState(updatedCheckedInputState);
-      console.log("Se ha actualizado clic "+checkedInputState);
+    //  console.log("Se ha actualizado clic "+checkedInputState);
       const totalPrice = checkedInputState.reduce((total, numero, index, array) => {
            let suma =0;
           if(numero===true){
@@ -34,19 +58,29 @@ export default function Services() {
         }, 0);
       setTotal(totalPrice);
   };
-
+  const servicesChosen={
+    info: checkedInputState
+  }
   return (
+    <FormContextServices.Provider value={{servicesChosen}}>
+    {isFormVisibleServ && (
+    <>
+    <div className="box-services">
+        <h2>Nuestros servicios</h2>
+        <p>Seleccione las servicios que desea: </p>
+      
+    </div>      
     <div className="App">
       <ul className="services-lista">
           <li>
               <div className="services-lista-items">
-                <div className="group-check-items">
+                <div className="group-check-items text-desc-items">
                    <strong><span>Descripción</span></strong>
                 </div>
                 <strong>Precio</strong>
               </div>
           </li>
-        {services.map(({ id, tipo, costo}, index) => {
+        {services.map(({ id, tipo, costo,tiempo}, index) => {
           return (
             <li key={index}>
               <div className="services-lista-items">
@@ -60,7 +94,7 @@ export default function Services() {
                     checked={checkedInputState[index]}
                     onChange={() => handleOnChange(index)}
                   />
-                  <label className="label-items" htmlFor={`custom-checkbox-${index}`}>{tipo}</label>
+                  <label className="label-items" htmlFor={`custom-checkbox-${index}`}>{tipo} ({tiempo}h)</label>
                 </div>
                 <div>{getFormattedPrice(costo)}</div>
               </div>
@@ -75,5 +109,10 @@ export default function Services() {
         </li>
       </ul>
     </div>
+    <button className="btn"  onClick={handleSubmit}>Generar orden</button>
+    </>
+    )}
+    {!isFormVisibleServ && <FormOrder/>}
+    </FormContextServices.Provider>
   );
 }

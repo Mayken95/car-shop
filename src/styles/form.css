@@ -85,3 +85,12 @@
 .titleForm{
 	margin-bottom: 2rem;
 }
+.veh-client,.veh-correo{
+	font-size: 1.2rem;
+}
+.veh-label{
+	font-weight: bold;
+}
+.info-client{
+	margin-bottom: 0.5rem;
+}

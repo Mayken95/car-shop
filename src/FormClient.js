@@ -46,11 +46,11 @@ function FormClient () {
 			//dispatch({ type: 'SET_FORM_VALUES', payload: formState }); 
 			dispatch({ type: 'HIDE_FORM' }); 
 			dispatch({ type: 'GET_INFO_CLIENT' }); // Reiniciar el formulario
-			console.log('Resumen:', formState);
-		  console.log("formulario enviado");
+			//console.log('Resumen:', formState);
+		  //console.log("formulario enviado");
 		} else {
 			alert("Faltan completar campos")
-		  	console.log("PAra continuar deberá completar todos los campos");
+		  //	console.log("PAra continuar deberá completar todos los campos");
 		}
 	}
 	
