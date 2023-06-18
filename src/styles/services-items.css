@@ -21,4 +21,23 @@
 }
 .label-items{
     font-size: 1.1rem!important;
+    font-weight: lighter;
+}
+
+.services-lista-item-total{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    gap:0.4rem;
+    border-top: 0.3rem solid;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+}
+.section-total,.section-total-value{
+    font-size: 20px;
+    font-weight: bold;
+}
+.section-total-value{
+    color: green
 }

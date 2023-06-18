@@ -41,9 +41,9 @@ export default function Services() {
           <li>
               <div className="services-lista-items">
                 <div className="group-check-items">
-                   <label className="label-items">Descripción</label>
+                   <strong><span>Descripción</span></strong>
                 </div>
-                <div className="right-section">Precio</div>
+                <strong>Precio</strong>
               </div>
           </li>
         {services.map(({ id, tipo, costo}, index) => {
@@ -62,15 +62,15 @@ export default function Services() {
                   />
                   <label className="label-items" htmlFor={`custom-checkbox-${index}`}>{tipo}</label>
                 </div>
-                <div className="right-section">{getFormattedPrice(costo)}</div>
+                <div>{getFormattedPrice(costo)}</div>
               </div>
             </li>
           );
         })}
         <li>
-          <div className="services-lista-item">
-            <div className="left-section">Total:</div>
-            <div className="right-section">{getFormattedPrice(total)}</div>
+          <div className="services-lista-item-total">
+            <div className="section-total">Total a pagar:</div>
+            <span className="section-total-value">{getFormattedPrice(total)}</span>
           </div>
         </li>
       </ul>

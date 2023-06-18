@@ -1,7 +1,8 @@
-import React, {	useEffect,	useState, useContext} from 'react';
-import Services from './Services' 
-import { FormContextClient } from './FormClient';
+import React, {	useEffect,	useState, useContext, createContext} from 'react';
 import './styles/form.css';
+import { FormContextClient } from './FormClient';
+import Services from './Services' 
+import FormOrder from './FormOrder' 
 //Proporcionar la información del vehículo, como la marca, modelo, placa, nivel del tanque de gasolina,
 // y un campo de texto donde 
 // se podrán detallar abolladuras, rayones o cualquier dato relevante sobre el estado exterior del vehículo.
@@ -27,16 +28,18 @@ function useCombustible() {
 	}, []);
 	return infoCombustible;
 }
+export const FormContextVehicle = createContext();
 
 export default function FormVehicle() {
 	const { formState } = useContext(FormContextClient);
-	console.log(formState);
+
 	const [inputPlaca, cambiarInputPlaca] = useState('');
 	const [inputMarca, cambiarInputMarca] = useState('');
 	const [inputModelo, cambiarInputModelo] = useState('');
 	const [opCombustible, cambiarOpCombustible] = useState(-1);
 	const [opNivTanque, cambiarOpNivTanque] = useState(-1);
 	const [textAreaInfoEstado, cambiartextAreaInfoEstado] = useState('');
+	const [isFormVisibleVeh, setFormVisibleVeh] = useState(true);
 	const marcas = useMarcas();
 	const combustible = useCombustible();
 
@@ -62,10 +65,27 @@ export default function FormVehicle() {
 		//const opcion = e.target.value;
 		cambiarOpNivTanque(-1);
 	}
+	const infoVehicle = {
+		inputPlaca,
+		inputMarca, inputModelo, opCombustible, opNivTanque, 
+		textAreaInfoEstado
+	}
+	const handleSubmit = (e)=>{
+		if (inputPlaca && inputMarca && inputModelo  && opCombustible && opNivTanque && textAreaInfoEstado) {
+			setFormVisibleVeh(false);
+			console.log('Resumen VEHICULO:', infoVehicle);
+		  } else {
+			alert('Por favor, debe completar todos los campos del formulario');
+		  }
+	}
+	
 	return ( <>
-			<form action = "" className="formulario" >
+	        <FormContextVehicle.Provider value={{ infoVehicle }}>
+			{isFormVisibleVeh && (
+			<div className="formulario" >
 			<div className = "titleForm"><h1>Información del Vehículo </h1></div>
-				<p>Cliente: {formState.nombre}</p>
+				<p className="veh-client">Cliente: {formState.nombre}</p>
+				<p className="veh-correo">Correo:  {formState.correo}</p>
 				<div>
 					<label htmlFor = "placa">Placa</label> 
 					<input type = "text"
@@ -131,7 +151,10 @@ export default function FormVehicle() {
 				<p>Seleccione las servicios que desea: </p>
 				
 				<Services/>
-				</form> 
+				<button className="btn"  onClick={handleSubmit}>Continuar</button>
+				</div> )}
+				{!isFormVisibleVeh && <FormOrder />}
+				</FormContextVehicle.Provider>
 				</>
 );
 }
