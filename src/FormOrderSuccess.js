@@ -5,7 +5,7 @@ import './styles/services-items.css';
 export default function FormOrderSuccess() {
 
     return (<div className="success-txt">
-                Gracias por confiar en MAXIMCAR SHOP!
+                Se agendó su orden exitosamente.¡Gracias por confiar en MAXIMCAR SHOP!
              </div>)
 
 }
