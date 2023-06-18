@@ -5,7 +5,7 @@ const getFormattedPrice = (costo) => `$${costo.toFixed(2)}`;
 
 export default function Services() {
     const [checkedInputState, setCheckedInputState] = useState(
-      new Array(services.length).fill(false)
+      (new Array(services.length).fill(false))
     );
     
   const [total, setTotal] = useState(0);
@@ -16,20 +16,22 @@ export default function Services() {
   //   return (seervices[{ posId}].costo);
   // }
   const handleOnChange = (position) => {
-    
-      const updatedCheckedInputState = checkedInputState.map((itemState, index) => index === position ? !itemState : itemState);
-      console.log(checkedInputState);
+    console.log("Esta es la position"+ position);
+    console.log("Diste un clic "+checkedInputState);
+     // const updatedCheckedInputState = checkedInputState.map((itemState, index) => index === position ? !itemState : itemState);
+      const updatedCheckedInputState = checkedInputState;      
+      updatedCheckedInputState[position]= !checkedInputState[position];
       setCheckedInputState(updatedCheckedInputState);
-      
-      const totalPrice =updatedCheckedInputState.reduce(
-        (suma, currentElemen, index) => {
-          console.log(currentElemen);
-          if (currentElemen === true) {
-            return (suma + services[position].costo);
+      console.log("Se ha actualizado clic "+checkedInputState);
+      const totalPrice = checkedInputState.reduce((total, numero, index, array) => {
+           let suma =0;
+          if(numero===true){
+            suma = services[index].costo
+          }else{
+            suma=0
           }
-          return suma;
-        }, 
-        0);
+          return total + suma;
+        }, 0);
       setTotal(totalPrice);
   };
 
@@ -44,7 +46,7 @@ export default function Services() {
                 <div className="right-section">Precio</div>
               </div>
           </li>
-        {services.map(({ tipo, costo}, index) => {
+        {services.map(({ id, tipo, costo}, index) => {
           return (
             <li key={index}>
               <div className="services-lista-items">
@@ -54,7 +56,7 @@ export default function Services() {
                     className="check-items"
                     id={`custom-checkbox-${index}`}
                     name={tipo}
-                    value={checkedInputState[index]}
+                    value={index}
                     checked={checkedInputState[index]}
                     onChange={() => handleOnChange(index)}
                   />
