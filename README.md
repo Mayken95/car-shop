@@ -39,8 +39,7 @@ npm start
 ```
 
 5. Automáticamente se abrirá en el navegador el sitio alojado localmente, también se puede abir mediante el siguiente enlace:
-```
+
  [http://localhost:3000](http://localhost:3000)
 
- ```
 
