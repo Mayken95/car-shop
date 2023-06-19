@@ -18,7 +18,6 @@ Requisitos:
 1. Clonar el proyecto mediante el comando:
 ```
 git clone https://github.com/Mayken95/car-shop.git
-
 ```
 2. Abrir la consola de comandos e ir al directorio car-shop mediante el comando:
 ```
@@ -28,14 +27,12 @@ cd car-shop
 3. Ejecutar el comando:
 ```
 npm install
-
 ```
 
 4. Luego ejecutar el comando:
 
 ```
 npm start
-
 ```
 
 5. Automáticamente se abrirá en el navegador el sitio alojado localmente, también se puede abir mediante el siguiente enlace: [http://localhost:3000](http://localhost:3000)
