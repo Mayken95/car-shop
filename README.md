@@ -38,3 +38,7 @@ npm start
 5. Automáticamente se abrirá en el navegador el sitio alojado localmente, también se puede abir mediante el siguiente enlace: [http://localhost:3000](http://localhost:3000)
 
 
+## LINK DE DESPLIEGUE EN AWS 
+```
+http://salavarriat-proyectocarshop.s3-website-us-east-1.amazonaws.com/
+```
